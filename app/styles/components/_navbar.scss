@@ -1,5 +1,6 @@
 @import '../variables/colors';
 @import '../variables/font';
+@import '../variables/breakpoints';
 
 .navbar-layout {
     display: flex;
@@ -7,44 +8,66 @@
     margin: 0 auto;
     width: 1200px;
 
+    @media(max-width: $navbar-first-breakpoint) {
+        width: 900px;
+    }
+
+    @media(max-width: $navbar-second-breakpoint) {
+        width: 600px;
+    }
+
+    @media(max-width: $navbar-third-breakpoint) {
+        width: 350px;
+    }
+
+    @media(max-width: $navbar-fourth-breakpoint) {
+        width: 300px;
+    }
+
     .content-container {
         display: flex;
         width: 100%;
         justify-content: space-between;
         align-items: center;
+        text-decoration: none;
 
-        .logo-container{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            transition: 0.4s;
+        .home-link{
+            text-decoration: none;
 
-            &:hover{
+            .logo-container{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+                cursor: pointer;
+                transition: 0.4s;
+    
+                &:hover{
+                    .logo-icon{
+                        color: $button-highlight;
+        
+                    }
+    
+                    h2{
+                        color: $button-highlight;
+                    }
+                }
+    
+    
                 .logo-icon{
-                    color: $button-highlight;
+                    transition: 0.4s;
+                    color: $text-color;
     
                 }
-
                 h2{
-                    color: $button-highlight;
+                    transition: 0.4s;
+                    font-family: $primary-font;
+                    color: $text-color;
+                    font-weight: 400;
                 }
             }
-
-
-            .logo-icon{
-                transition: 0.4s;
-                color: $text-color;
-
-            }
-            h2{
-                transition: 0.4s;
-                font-family: $primary-font;
-                color: $text-color;
-                font-weight: 400;
-            }
         }
+
 
         .login-button{
             border: 4px solid $text-color;

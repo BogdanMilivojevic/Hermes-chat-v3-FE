@@ -1,0 +1,98 @@
+.login-container{
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    border: 5px solid $text-color;
+    position: absolute;
+    width: 600px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    @media(max-width: $login-first-breakpoint) {
+        width: 400px;
+    }
+
+    @media(max-width: $login-second-breakpoint) {
+        width: 250px;
+    }
+
+    .login-email{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: $primary-font;
+        color:$text-color;
+
+        input{
+            padding: 12px;
+            border: none;
+            outline: none;
+            border-radius: 12px;
+            background: $background-color;
+            font-family: $primary-font;
+            color: $text-color;
+            font-size: 16px;
+
+            @media(max-width: $login-second-breakpoint) {
+                padding: 4px;
+                font-size: 12px;
+                width: 50%;
+            }
+        }
+
+        label{
+            @media(max-width: $login-second-breakpoint) {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .login-password{
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+        font-family: $primary-font;
+        color:$text-color;
+
+        .show-hide-password{
+            cursor: pointer;
+            position: absolute;
+            right: 43%;
+
+            @media(max-width: $login-first-breakpoint) {
+                right: 62%;
+
+            }
+
+            @media(max-width: $login-second-breakpoint) {
+                right: 53%;
+            }
+
+        }
+
+        input{
+            padding: 12px;
+            border: none;
+            outline: none;
+            border-radius: 12px;
+            background: $background-color;
+            font-family: $primary-font;
+            color: $text-color;
+            font-size: 16px;
+
+            @media(max-width: $login-second-breakpoint) {
+                padding: 4px;
+                font-size: 12px;
+                width: 50%;
+            }
+        }
+
+        label{
+            @media(max-width: $login-second-breakpoint) {
+                font-size: 12px;
+            }
+        }
+    }
+}
