@@ -1,14 +1,14 @@
 'use client'
-import { Eye, EyeSlash } from '@phosphor-icons/react'
-import Link from 'next/link'
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Eye, EyeSlash } from '@phosphor-icons/react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
-
-
-export default function Login() {
-    const [email,setEmail] = useState<string>('')
+export default function Register() {
+    const [email, setEmail] = useState<string>('')
+    const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const [confirmPassword, setConfirmPassword] = useState<string>('')
     const [showPassword, setShowPassword] = useState<boolean>(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
     const [activeButton, setActiveButton] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string[]>([])
 
@@ -20,14 +20,25 @@ export default function Login() {
         setPassword(e.target.value)
     }
 
+    const handlePasswordConfirmChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setConfirmPassword(e.target.value)
+    }
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)
+    }
+
+    const togglePasswordConfirmVisibility = () => {
+        setShowConfirmPassword(!showConfirmPassword)
+    }
+
+    const handleUsernameChange = (e:ChangeEvent<HTMLInputElement>) => {
+        setUsername(e.target.value)
     }
 
     useEffect(() => {
         const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         const passwordRegex = /^(?=.*[0-9]).*$/;
-
         const timer = setTimeout(() => {
             if(email && !emailRegex.test(email)) {
                 setErrorMessage((prev) => [...prev, 'Email must be valid'])
@@ -40,11 +51,21 @@ export default function Login() {
             if(password && !passwordRegex.test(password)) {
                 setErrorMessage((prev) => [...prev, 'Password should have at least one number'])
             }
-    
-            if(email && password) {
+
+            if(username && username.length < 4) {
+                setErrorMessage((prev) => [...prev, 'Username should be at least 4 characters long'])
+            }
+
+            if(password && confirmPassword) {
+                if(password !== confirmPassword) {
+                    setErrorMessage((prev) => [...prev, 'Passwords don\'t match'])
+                }
+            }
+            if(email && password && username && confirmPassword) {
                 setActiveButton(true)
             }
-        },1000)
+    
+        }, 1000);
 
         return () => {
             clearTimeout(timer);
@@ -52,10 +73,10 @@ export default function Login() {
             setErrorMessage([])
         }
 
-    },[email, password])
+    },[email, password, username, confirmPassword])
 
 
-
+ 
     return(
         <div className="form-container">
             <div className="form-text">
@@ -65,6 +86,15 @@ export default function Login() {
                     defaultValue={email}
                     onChange={e => handleEmailChange(e)}
                     placeholder='email'
+                />
+            </div>
+            <div className="form-text">
+                <label>USERNAME</label>
+                <input
+                    type="text"
+                    defaultValue={username}
+                    onChange={e => handleUsernameChange(e)}
+                    placeholder='username'
                 />
             </div>
             <div className="form-password">
@@ -78,13 +108,24 @@ export default function Login() {
                     placeholder='password'
                 />
             </div>
+            <div className="form-password">
+                <label>CONFIRM PASSWORD</label>
+                { showConfirmPassword ? ( <EyeSlash onClick={togglePasswordConfirmVisibility} size={26} className='show-hide-password' />) 
+                    : (<Eye size={26} className='show-hide-password' onClick={togglePasswordConfirmVisibility} />)}
+                <input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    defaultValue={confirmPassword}
+                    onChange={e => handlePasswordConfirmChange(e)}
+                    placeholder='password'
+                />
+            </div>
             <div className='error-container'>
                 {errorMessage && errorMessage.map((value,i) => (
                     <p className='error-message' key={i}>{value}</p>
                 ))}
             </div>
-            <button className={activeButton ? 'form-button' : 'form-button inactive'}>Login</button>
-            <p className='register-cta' >Need an account? <Link href='/register' className='register-cta-link'>Register</Link></p>
+            <button className={activeButton && errorMessage.length === 0 ? 'form-button' : 'form-button inactive'}>Register</button>
         </div>
     )
+
 }
