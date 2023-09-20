@@ -1,4 +1,4 @@
-.login-container{
+.form-container{
     padding: 32px;
     display: flex;
     flex-direction: column;
@@ -18,7 +18,7 @@
         width: 250px;
     }
 
-    .login-email{
+    .form-text{
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -49,7 +49,7 @@
         }
     }
 
-    .login-password{
+    .form-password{
         justify-content: space-between;
         align-items: center;
         display: flex;
@@ -95,4 +95,64 @@
             }
         }
     }
+
+    .form-button{
+        border: 4px solid $text-color;
+        text-decoration: none;
+        padding: 8px 14px;
+        border-radius: 22px;
+        font-size: 18px;
+        font-family:$primary-font;
+        background: $background-color;
+        color: $text-color;
+        cursor: pointer;
+        transition: 0.4s;
+        width: 50%;
+        align-self: center;
+        
+
+        &:hover{
+            border: 4px solid $button-highlight;
+            color:$button-highlight
+        }
+    }
+
+    .inactive{
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+    .register-cta {
+        color: $text-color;
+        font-family: $primary-font;
+        font-weight: 400;
+
+        .register-cta-link {
+            color: $text-color;
+            font-family: $primary-font;
+            text-decoration: underline;
+            transition: 0.4s;
+            margin-right: 10px;
+
+            &:hover{
+                color: $button-highlight;
+            }
+        }
+
+
+    }
+
+    .error-container{
+        display: flex;
+        align-self: center;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .error-message{
+            color: red;
+        }
+    }
+
+
 }
