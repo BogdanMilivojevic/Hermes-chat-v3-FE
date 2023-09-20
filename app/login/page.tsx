@@ -83,7 +83,7 @@ export default function Login() {
                     <p className='error-message' key={i}>{value}</p>
                 ))}
             </div>
-            <button className={activeButton ? 'form-button' : 'form-button inactive'}>Login</button>
+            <button className={activeButton && errorMessage.length === 0  ? 'form-button' : 'form-button inactive'}>Login</button>
             <p className='register-cta' >Need an account? <Link href='/register' className='register-cta-link'>Register</Link></p>
         </div>
     )
