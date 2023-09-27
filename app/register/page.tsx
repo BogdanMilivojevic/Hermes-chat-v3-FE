@@ -1,6 +1,8 @@
 'use client'
 import { Eye, EyeSlash } from '@phosphor-icons/react';
 import { ChangeEvent, useEffect, useState } from 'react';
+import axiosInstance from '../utils/axiosInstance';
+import { AxiosResponse, isAxiosError } from 'axios';
 
 export default function Register() {
     const [email, setEmail] = useState<string>('')
@@ -65,7 +67,7 @@ export default function Register() {
                 setActiveButton(true)
             }
     
-        }, 1000);
+        }, 700);
 
         return () => {
             clearTimeout(timer);
@@ -75,7 +77,27 @@ export default function Register() {
 
     },[email, password, username, confirmPassword])
 
+    const handleRegister = async () => {
+        setErrorMessage([])
 
+        try {
+            const response:AxiosResponse = await axiosInstance.post('/auth/register', {
+                email,
+                password,
+                username
+            })
+
+            localStorage.setItem('token', response.data)
+            
+        } catch (err) {
+            console.log(err)
+            if(isAxiosError(err)) {
+
+                if(err.response?.data.message) return setErrorMessage((prev) => [...prev, err.response.data.message])
+            }
+            setErrorMessage((prev) => [...prev, 'Something went wrong'])
+        }
+    }
  
     return(
         <div className="form-container">
@@ -124,7 +146,7 @@ export default function Register() {
                     <p className='error-message' key={i}>{value}</p>
                 ))}
             </div>
-            <button className={activeButton && errorMessage.length === 0 ? 'form-button' : 'form-button inactive'}>Register</button>
+            <button className={activeButton && errorMessage.length === 0 ? 'form-button' : 'form-button inactive'} onClick={handleRegister}>Register</button>
         </div>
     )
 
