@@ -2,6 +2,8 @@
 import { Eye, EyeSlash } from '@phosphor-icons/react'
 import Link from 'next/link'
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
+import axiosInstance from '../utils/axiosInstance'
+import { AxiosResponse, isAxiosError } from 'axios'
 
 
 
@@ -44,7 +46,7 @@ export default function Login() {
             if(email && password) {
                 setActiveButton(true)
             }
-        },1000)
+        },700)
 
         return () => {
             clearTimeout(timer);
@@ -54,6 +56,26 @@ export default function Login() {
 
     },[email, password])
 
+
+    const handleLogin = async () => {
+        setErrorMessage([])
+        try {
+            const response: AxiosResponse = await axiosInstance.post('/auth/login', {
+                email,
+                password,
+            })
+
+            localStorage.setItem('token', response.data)
+            
+        } catch (err) {
+
+            if(isAxiosError(err)) {
+
+                if(err.response?.data.message) return setErrorMessage((prev) => [...prev, err.response.data.message])
+            }
+            setErrorMessage((prev) => [...prev, 'Something went wrong'])
+        }
+    }
 
 
     return(
@@ -83,7 +105,7 @@ export default function Login() {
                     <p className='error-message' key={i}>{value}</p>
                 ))}
             </div>
-            <button className={activeButton && errorMessage.length === 0  ? 'form-button' : 'form-button inactive'}>Login</button>
+            <button className={activeButton && errorMessage.length === 0  ? 'form-button' : 'form-button inactive'} onClick={handleLogin}>Login</button>
             <p className='register-cta' >Need an account? <Link href='/register' className='register-cta-link'>Register</Link></p>
         </div>
     )
