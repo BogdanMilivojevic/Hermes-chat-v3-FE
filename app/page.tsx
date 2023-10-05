@@ -22,5 +22,6 @@ export default function HermesChat() {
                 transition={{ duration: 0.5, ease: 'easeOut' }}
             >  <Link className='homepage-cta-link' href='/login'>Login</Link>to start chatting</motion.h1>
         </>
+
     )
 }
