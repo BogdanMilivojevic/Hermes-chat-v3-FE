@@ -4,6 +4,9 @@ import Link from 'next/link'
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
 import axiosInstance from '../utils/axiosInstance'
 import { AxiosResponse, isAxiosError } from 'axios'
+import { useRouter } from 'next/navigation'
+import { useSetRecoilState } from 'recoil'
+import { loggedIn } from '../state/loggedInAtom'
 
 
 
@@ -13,6 +16,8 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [activeButton, setActiveButton] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string[]>([])
+    const setLoggedIn = useSetRecoilState(loggedIn)
+    const router = useRouter()
 
     const handleEmailChange = (e:ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
@@ -66,6 +71,8 @@ export default function Login() {
             })
 
             localStorage.setItem('token', response.data)
+            setLoggedIn(true)
+            router.push('/main-page')
             
         } catch (err) {
 
@@ -87,6 +94,7 @@ export default function Login() {
                     defaultValue={email}
                     onChange={e => handleEmailChange(e)}
                     placeholder='email'
+                    spellCheck="false"
                 />
             </div>
             <div className="form-password">

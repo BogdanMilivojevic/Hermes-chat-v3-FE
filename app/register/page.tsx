@@ -3,6 +3,9 @@ import { Eye, EyeSlash } from '@phosphor-icons/react';
 import { ChangeEvent, useEffect, useState } from 'react';
 import axiosInstance from '../utils/axiosInstance';
 import { AxiosResponse, isAxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
+import { useSetRecoilState } from 'recoil';
+import { loggedIn } from '../state/loggedInAtom';
 
 export default function Register() {
     const [email, setEmail] = useState<string>('')
@@ -13,6 +16,8 @@ export default function Register() {
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
     const [activeButton, setActiveButton] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string[]>([])
+    const setLoggedIn = useSetRecoilState(loggedIn)
+    const router = useRouter()
 
     const handleEmailChange = (e:ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
@@ -88,6 +93,8 @@ export default function Register() {
             })
 
             localStorage.setItem('token', response.data)
+            setLoggedIn(true)
+            router.push('/main-page')
             
         } catch (err) {
             console.log(err)
@@ -108,6 +115,7 @@ export default function Register() {
                     defaultValue={email}
                     onChange={e => handleEmailChange(e)}
                     placeholder='email'
+                    spellCheck="false"
                 />
             </div>
             <div className="form-text">
@@ -117,6 +125,7 @@ export default function Register() {
                     defaultValue={username}
                     onChange={e => handleUsernameChange(e)}
                     placeholder='username'
+                    spellCheck="false"
                 />
             </div>
             <div className="form-password">
