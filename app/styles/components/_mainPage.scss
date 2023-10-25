@@ -6,6 +6,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-family: $primary-font;
 
     @media(max-width: $main-page-first-breakpoint) {
         width: 600px;
@@ -36,7 +37,7 @@
             text-align: center;
             overflow: hidden;
             background-color: $text-color;
-            transition: 0.4s;
+            transition: 0.6s;
 
             &:hover {
                 background-color: $button-highlight;
@@ -88,4 +89,352 @@
             }
         }
     }
+
+    .settings-options-container{
+        padding: 30px;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 30px;
+
+        @media(max-width: $settings-options-first-breakpoint) {
+            width: 300px;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .settings-options-left-side{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+
+        @media(max-width: $settings-options-first-breakpoint) {
+            gap: 10px;
+        }
+
+            .settings-icon-container{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                cursor: pointer;
+                padding: 5px;
+                border-radius: 12px;
+
+                p{
+                    color: $text-color;
+                    font-size: 18px;
+
+                    @media(max-width: $settings-options-first-breakpoint) {
+                        font-size: 12px;
+                    }
+                }
+
+                &:hover{
+                    background: $div-highlight;
+                }
+            }
+        }
+
+        .settings-options-right-side{
+            display: flex;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            font-family: $primary-font;
+            
+            .profile-settings-editing-form{
+
+                @media(max-width: $settings-options-first-breakpoint) {
+                    width: 180px;
+                }
+                
+
+                .error-message{
+                    color: red;
+                    font-family: $primary-font;
+                }
+
+                .profile-settings-edit-photo{
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 40px;
+
+
+                    .uploadable-photo-container{
+                        height: 92px;
+                        width: 92px;
+                        border-radius: 50%;
+                        border: 3px solid $text-color;
+                        overflow: hidden;
+                        background-color: $text-color;
+                        transition: 0.6s;
+                        align-self: center;
+
+                        @media(max-width: $settings-options-first-breakpoint) {
+                            height: 46px;
+                            width: 46px;
+                        }
+
+                        .profile-settings-icon{
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            cursor: pointer;
+                        }
+                    }
+
+
+                    .photo-upload{
+                        margin-top: 20px;
+                        border: 4px solid $text-color;
+                        text-decoration: none;
+                        padding: 6px 12px;
+                        border-radius: 22px;
+                        font-size: 16px;
+                        font-family:$primary-font;
+                        background: $background-color;
+                        color: $text-color;
+                        cursor: pointer;
+                        transition: 0.4s;
+                        width: 50%;
+                        align-self: center;
+        
+        
+                            &:hover{
+                            border: 4px solid $button-highlight;
+                            color:$button-highlight
+                        } 
+
+                        @media(max-width: $settings-options-first-breakpoint) {
+                          font-size: 12px;
+                          width: 30%;
+                        }
+                    }
+                }
+
+                .profile-settings-username-update{
+                    justify-content: space-between;
+                    align-items: center;
+                    display: flex;
+                    font-family: $primary-font;
+                    color: $text-color;
+                    
+
+                    @media(max-width: $settings-options-first-breakpoint) {
+                       label{
+                        font-size: 12px;
+                       }
+                      }
+
+
+                    input { 
+                        gap: 20px;                    
+                        padding: 12px;
+                        border: none;
+                        outline: none;
+                        border-radius: 12px;
+                        background: $background-color;
+                        font-family: $primary-font;
+                        color: $text-color;
+                        font-size: 16px;
+
+                        @media(max-width: $settings-options-first-breakpoint) {
+                            font-size: 12px;
+                            gap: 10px;                    
+                            padding: 6px;
+                            width: 50%;
+                          }
+                    }
+                    
+                }
+
+                .profile-settings-email-update{
+                    justify-content: space-between;
+                    align-items: center;
+                    display: flex;
+                    font-family: $primary-font;
+                    color: $text-color;
+
+                    @media(max-width: $settings-options-first-breakpoint) {
+                        label{
+                         font-size: 12px;
+                        }
+                       }
+ 
+
+
+                    input { 
+                        gap: 20px;                    
+                        padding: 12px;
+                        border: none;
+                        outline: none;
+                        border-radius: 12px;
+                        background: $background-color;
+                        font-family: $primary-font;
+                        color: $text-color;
+                        font-size: 16px;
+
+                        @media(max-width: $settings-options-first-breakpoint) {
+                            font-size: 12px;
+                            gap: 10px;                    
+                            padding: 6px;
+                            width: 50%;
+                          }
+                    }
+
+
+                }
+
+                .editing-form-save-cancel-options{
+                    margin-top: 30px;
+                    display: flex;
+                    gap: 30px;
+
+                    @media(max-width: $settings-options-first-breakpoint) {
+                        gap: 10px;
+                      }
+                }
+
+            }
+
+            .profile-settings-form-container{
+
+                .change-password-form{
+                    display: flex;
+                    flex-direction: column;
+                    color: $text-color;
+                    margin-top: 20px;
+                    gap: 50px;
+
+                    .change-password-form-password{        
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+
+                        input{
+                            border: none;
+                            outline: none;
+                            background: $background-color;
+                            font-family: $primary-font;
+                            color: $text-color;
+                            font-size: 16px;
+                            width: 30%;
+                            border-bottom: 1px solid $text-color;
+                        }
+                    }
+
+                    .error-messages-container{
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+
+                        .error-message{
+                            color: red;
+                        }
+                    }
+                }
+
+                .profile-settings-form{
+                    display: flex;
+                    flex-direction: column;
+    
+                    p {
+                        color:$text-color
+                    }
+    
+                    .profile-settings-photo{
+                        height: 92px;
+                        width: 92px;
+                        border-radius: 50%;
+                        border: 3px solid $text-color;
+                        overflow: hidden;
+                        background-color: $text-color;
+                        transition: 0.6s;
+                        align-self: center;
+                        margin-bottom: 20px;
+
+                        @media(max-width: $settings-options-first-breakpoint) {
+                            height: 64px;
+                            width: 64px;
+                        }
+    
+                        .profile-settings-icon{
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            cursor: pointer;
+                        }
+                    }
+    
+                    .profile-settings-username {
+                        display: flex;
+                        gap: 20px;
+
+
+                        @media(max-width: $settings-options-first-breakpoint) {
+                            p{
+                                font-size: 12px;
+                            }
+                        }
+    
+                    }
+    
+                    .profile-settings-email{
+                        display: flex;
+                        gap: 20px;
+
+
+                        @media(max-width: $settings-options-first-breakpoint) {
+                            p{
+                                font-size: 12px;
+                            }
+                        }
+                    }
+                }
+                .update-button{
+                    margin-top: 20px;
+                    border: 4px solid $text-color;
+                    text-decoration: none;
+                    padding: 6px 12px;
+                    border-radius: 22px;
+                    font-size: 16px;
+                    font-family:$primary-font;
+                    background: $background-color;
+                    color: $text-color;
+                    cursor: pointer;
+                    transition: 0.4s;
+                    width: 50%;
+                    align-self: center;
+    
+    
+                        &:hover{
+                        border: 4px solid $button-highlight;
+                        color:$button-highlight
+                    }
+
+                    @media(max-width: $settings-options-first-breakpoint) {
+                        width: 70%;
+                        font-size: 12px;
+                    }
+                }
+            }
+
+        
+        }
+    }
+
+.active-div{
+    background: $div-active !important;
+}
+
+.active-navbar-icon {
+    border: 6px solid $button-highlight !important;
+}
+
+.inactive{
+   pointer-events: none;
+   opacity: 0.6;
+}
+
 }

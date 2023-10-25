@@ -5,7 +5,7 @@ import axiosInstance from '../utils/axiosInstance';
 import { AxiosResponse, isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useSetRecoilState } from 'recoil';
-import { loggedIn } from '../state/loggedInAtom';
+import { tokenAtom } from '../state/loggedInAtom';
 
 export default function Register() {
     const [email, setEmail] = useState<string>('')
@@ -16,7 +16,7 @@ export default function Register() {
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
     const [activeButton, setActiveButton] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string[]>([])
-    const setLoggedIn = useSetRecoilState(loggedIn)
+    const setToken = useSetRecoilState(tokenAtom)
     const router = useRouter()
 
     const handleEmailChange = (e:ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +93,7 @@ export default function Register() {
             })
 
             localStorage.setItem('token', response.data)
-            setLoggedIn(true)
+            setToken(response.data)
             router.push('/main-page')
             
         } catch (err) {
@@ -105,7 +105,7 @@ export default function Register() {
             setErrorMessage((prev) => [...prev, 'Something went wrong'])
         }
     }
- 
+
     return(
         <div className="form-container">
             <div className="form-text">
