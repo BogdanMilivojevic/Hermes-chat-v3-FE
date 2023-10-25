@@ -1,6 +1,16 @@
 import { atom } from 'recoil';
 
-export const currentUser = atom({
+export interface User {
+    username: string,
+    email: string,
+    photo_id: string
+}
+
+export const currentUserAtom = atom<User>({
     key:'loggedIn',
-    default:{}
+    default:{
+        username: '',
+        email: '',
+        photo_id: ''
+    }
 })

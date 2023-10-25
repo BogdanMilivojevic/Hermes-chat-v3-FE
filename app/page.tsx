@@ -2,11 +2,9 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion'
-import { useState } from 'react';
 
 
 export default function HermesChat() {
-    const [heading,setHeading] = useState()
 
     return( 
         <>
