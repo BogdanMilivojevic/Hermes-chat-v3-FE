@@ -34,12 +34,17 @@
             font-family: $primary-font;
             color: $text-color;
             font-size: 16px;
+            transition: 0.4s;
 
             @media(max-width: $login-second-breakpoint) {
                 padding: 4px;
                 font-size: 12px;
                 width: 50%;
             }
+        }
+
+        input:focus {
+            background: $div-highlight;
         }
 
         label{
@@ -59,7 +64,7 @@
         .show-hide-password{
             cursor: pointer;
             position: absolute;
-            right: 43%;
+            right: 45%;
 
             @media(max-width: $login-first-breakpoint) {
                 right: 62%;
@@ -81,12 +86,17 @@
             font-family: $primary-font;
             color: $text-color;
             font-size: 16px;
+            transition: 0.4s;
 
             @media(max-width: $login-second-breakpoint) {
                 padding: 4px;
                 font-size: 12px;
                 width: 50%;
             }
+        }
+
+        input:focus {
+            background: $div-highlight;
         }
 
         label{
