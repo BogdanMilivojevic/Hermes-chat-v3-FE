@@ -100,3 +100,4 @@ export const PasswordIcon = ({className, width, height, onClick}:InterfaceIcon) 
             </g></svg>
     )
 }
+

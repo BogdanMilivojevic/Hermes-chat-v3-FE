@@ -7,7 +7,7 @@ export interface User {
 }
 
 export const currentUserAtom = atom<User>({
-    key:'loggedIn',
+    key:'currentUser',
     default:{
         username: '',
         email: '',
