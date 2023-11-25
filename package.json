@@ -24,9 +24,14 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "recoil": "^0.7.7",
-    "typescript": "5.2.2"
+    "socket.io-client": "^4.7.2",
+    "typescript": "5.2.2",
+    "utf-8-validate": "^5.0.10"
   },
   "devDependencies": {
     "sass": "^1.66.1"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.8"
   }
 }

@@ -8,7 +8,25 @@
     transform: translate(-50%, -50%);
     font-family: $primary-font;
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+      }
+    
+      &::-webkit-scrollbar-track {
+     background: $div-active;
+      }
+    
+      &::-webkit-scrollbar-thumb {
+        padding: 3px;
+        background-color:$div-highlight; 
+        border-radius: 35px;       
+      }
+
+    .conversation-page-container{
+        position: relative;
+    }
 
     @media(max-width: $main-page-first-breakpoint) {
         width: 600px;
@@ -636,6 +654,24 @@
         margin-bottom: 20px;
         border-bottom: 3px solid  $text-color;
         padding-bottom: 5px;
+    }
+
+    .files-display-container{
+        padding: 20px;
+        position: absolute;
+        bottom: 12%;
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+
+        .remove-file{
+            fill:$text-color;
+            cursor: pointer;
+        }
+        .input-bar-icon{
+            
+            fill: $text-color;
+        }
     }
 
 }

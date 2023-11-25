@@ -1,7 +1,7 @@
 'use client'
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { AddFriend, UserDefaultIcon, Users } from './Icons/Icons';
-import { User, currentUserAtom } from '../state/userAtom';
+import {  currentUserAtom } from '../state/userAtom';
 import { useEffect, useRef, useState } from 'react';
 import axiosInstance from '../utils/axiosInstance';
 import Image from 'next/image';
@@ -10,13 +10,14 @@ import { tokenAtom } from '../state/loggedInAtom';
 import { ChatDots } from '@phosphor-icons/react';
 import { friendRequestsAtom } from '../state/friendRequestsAtom';
 import { NotificationsAtom } from '../state/notificationsAtom';
+import { User } from '../interfaces/interfaces';
 
 export default  function MainPageNavbar() {
     const setCurrentUser = useSetRecoilState(currentUserAtom)
     const setFriendRequestsAtom = useSetRecoilState(friendRequestsAtom)
     const setNotificationsAtom = useSetRecoilState(NotificationsAtom)
     const notifications = useRecoilValue(NotificationsAtom)
-    const [user,setUser] = useState<User>({username:'', email:'', photo_id: ''})
+    const [user,setUser] = useState<User>({id: 0, username:'', email:'', photo_id: ''})
     const setToken = useSetRecoilState(tokenAtom)
     const currentUser = useRecoilValue(currentUserAtom)
     const router = useRouter()
@@ -40,7 +41,7 @@ export default  function MainPageNavbar() {
         }
         handleCurrentUser()
         return () => {
-            setUser({username:'', email:'', photo_id: ''})
+            setUser({id:0, username:'', email:'', photo_id: ''})
         }
     },[])
 

@@ -3,10 +3,13 @@ export interface ActiveDivI {
     active: boolean;
 }
 
-export interface Users {
+export interface User {
     id:number,
     username: string,
     email:string,
-    photo_id?:string,
-    relationshipId?:number
+    photo_id:string,
 } []
+
+export interface UsersRelationship extends User {
+    relationshipId:number
+} 

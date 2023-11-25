@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { tokenAtom } from '../state/loggedInAtom';
+import { useEffect } from 'react';
 
 
 export default function Navbar() {
@@ -17,6 +18,12 @@ export default function Navbar() {
         router.push('/')
     }
 
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if(token) {
+            setToken(token)
+        }
+    },[])
 
 
     return (
