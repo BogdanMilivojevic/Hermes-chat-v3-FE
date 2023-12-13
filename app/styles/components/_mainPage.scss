@@ -7,8 +7,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: $primary-font;
-    overflow: hidden;
-    overflow-y: auto;
+    // overflow: hidden;
+    // overflow-y: auto;
 
     &::-webkit-scrollbar {
         width: 10px;
@@ -663,6 +663,12 @@
         display: flex;
         gap: 20px;
         justify-content: center;
+        
+        .file-from-container{
+            background: $background-color;
+            border-radius: 12px;
+            padding: 6px;
+        }
 
         .remove-file{
             fill:$text-color;

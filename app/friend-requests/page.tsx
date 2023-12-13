@@ -34,7 +34,6 @@ export default function FriendRequests () {
     const handleFriendRequestDecision = async(e, friendRequestId: number) => {   
         const actionType = e.target.className
         const token = localStorage.getItem('token')
-        console.log(token)
         try {
             await axiosInstance.patch(`users/friend-request/${friendRequestId}`, {}, {
                 headers: {
