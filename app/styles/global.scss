@@ -4,7 +4,10 @@
 @import './components/mainPage';
 @import './variables/colors';
 @import './components/receivedFriendRequests';
-@import './components//friendsPage';
+@import './components/friendsPage';
+@import './components/conversationBar';
+@import './components/inputBar';
+@import './components/messagesContainer';
 @import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@300&family=Ubuntu:wght@500;700&display=swap');
 
 body{
@@ -35,4 +38,6 @@ body{
         
     }
 
+
 }
+

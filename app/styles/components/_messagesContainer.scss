@@ -1,0 +1,91 @@
+.messages-container{
+    height: 440px;
+    padding: 20px;
+    overflow: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    &::-webkit-scrollbar {
+        width: 10px;
+      }
+    
+      &::-webkit-scrollbar-track {
+     background: $div-active;
+      }
+    
+      &::-webkit-scrollbar-thumb {
+        padding: 3px;
+        background-color:$div-highlight; 
+        border-radius: 35px;       
+      }
+
+
+      .sender-and-message-container{
+        display: flex;
+        gap: 10px;
+
+        .sender-image-container{
+            height: 52px;
+            width: 52px;
+            border-radius: 50%;
+            border: 3px solid $text-color;
+            text-align: center;
+            overflow: hidden;
+            background-color: $text-color;
+            transition: 0.6s;
+
+            &:hover {
+                background-color: $button-highlight;
+                border: 3px solid $button-highlight;
+            }
+            
+                    .sender-image{
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        cursor: pointer;
+                    }
+        }
+
+          .message-container{
+              background: $div-highlight;
+              padding: 12px;
+              border-radius: 22px;
+              width: 100%;
+
+
+              .a-link-file{
+                display: flex;
+                text-decoration: none;
+                align-items: center;
+                gap: 10px;
+                color: $text-color;
+                .linked-file{
+                    height: 32px;
+                    width: 32px;
+                    fill: $text-color;
+                }
+              }
+          
+              p{
+                  color: $text-color;
+              }
+
+              .timestamp{
+                font-size: 10px;
+              }
+
+              .files-container{
+                padding: 30px;
+                display: grid;
+                grid-template-columns:1fr 2fr;
+                gap: 10px;
+                
+                .message-photo{
+                  cursor: pointer;
+                }
+              }
+          }
+      }
+}

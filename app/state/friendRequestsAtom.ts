@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
-import { Users } from '../interfaces/interfaces';
+import {  UsersRelationship } from '../interfaces/interfaces';
 
 
-export const friendRequestsAtom = atom<Users[]>({
+export const friendRequestsAtom = atom<UsersRelationship[]>({
     key:'friendRequests',
     default:{
         id:0,

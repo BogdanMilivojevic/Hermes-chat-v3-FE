@@ -186,8 +186,6 @@ export default function ProfileSettings () {
                     Authorization: `Bearer ${token}`
                 }
             })
-
-            console.log(res)
         } catch (err) {
             console.log(err)
             if(isAxiosError(err)) {
