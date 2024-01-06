@@ -91,6 +91,7 @@ const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimi
         }
     }
 
+
     
     return (
         <div className="messages-container" ref={messageRef}>
@@ -100,8 +101,8 @@ const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimi
                         {message.user_id === currentUser.id ? <Image src={`${process.env.API_URL}/${currentUser?.photo_id}`} quality={100} height={100} width={100} unoptimized alt='user-photo' className='sender-image'/>  : <Image src={`${process.env.API_URL}/${conversationUser?.photo_id}`} quality={100} height={100} width={100} unoptimized alt='user-photo' className='sender-image'/>}
                     </div>
                     <div className="message-container">
-                        {message.url && <div className='files-container'>
-                            {message.url.map((url,i) => (
+                        { message.url && <div className='files-container'>
+                            {message.url?.length > 0 && message.url.map((url,i) => (
                                 <div key={i} className='file-container'>
                                     {findValue(url)}
                                 </div>

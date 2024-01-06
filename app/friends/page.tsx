@@ -5,12 +5,15 @@ import axiosInstance from '../utils/axiosInstance';
 import Image from 'next/image';
 import { UserDefaultIcon } from '../components/Icons/Icons';
 import { useRouter } from 'next/navigation';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { conversationUserAtom } from '../state/conversationUser';
 import { User } from '../interfaces/interfaces';
+import { socket } from '@/app/utils/socket';
+import { currentUserAtom } from '../state/userAtom';
 
 export default function Friends () {
     const [friends,setFriends] = useState<User[]>([])
+    // const currentUser = useRecoilValue(currentUserAtom)
     const setConversationUserAtom = useSetRecoilState(conversationUserAtom)
     const router = useRouter()
 
@@ -53,6 +56,22 @@ export default function Friends () {
         setConversationUserAtom(user)
         router.push(`conversation/${user.username}`)
     }
+
+    // useEffect(() => {
+    //     const socketInstance = socket.connect()
+    //     socket.emit('createRoom', currentUser.id)
+
+    //     socket.on('onSetOnline', (payload) => {
+    //         console.log(payload)
+    //     })
+
+    //     console.log(socketInstance)
+
+    //     return () => {
+    //         socket.off('onSetOnline')
+    //         socket.disconnect()
+    //     }
+    // },[])
 
     return (
         <div className="main-page-container">

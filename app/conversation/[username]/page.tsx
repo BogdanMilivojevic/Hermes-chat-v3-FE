@@ -58,8 +58,6 @@ export default function Conversation() {
         }
     },[messageLimit])
 
-    console.log(messageLimit)
-
 
     return(
         <div className="main-page-container">

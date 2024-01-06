@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './styles/global.scss'
 import Navbar from './components/navbar'
 import RecoilProvider from './utils/RecoilProvider'
+import { SocketContextProvider } from './utils/SocketProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,14 +17,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+    
     return (
         <RecoilProvider>
-            <html lang="en">
-                <body className={inter.className}>
-                    <Navbar/>
-                    {children}
-                </body>
-            </html>
+            <SocketContextProvider>
+                <html lang="en">
+                    <body className={inter.className}>
+                        <Navbar/>
+                        {children}
+                    </body>
+                </html>
+            </SocketContextProvider>
         </RecoilProvider>
     )
 }
