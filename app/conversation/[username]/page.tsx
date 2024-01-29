@@ -34,6 +34,7 @@ export default function Conversation() {
 
 
     useEffect(() => {
+        console.log(conversationUser)
         const token = localStorage.getItem('token')
         const getMessagesfromConversation = async () => {
             try {

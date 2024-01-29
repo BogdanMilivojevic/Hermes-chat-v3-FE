@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { tokenAtom } from '../state/loggedInAtom';
 import { useEffect } from 'react';
+import axiosInstance from '../utils/axiosInstance';
 
 
 export default function Navbar() {
@@ -12,7 +13,19 @@ export default function Navbar() {
     const token = useRecoilValue(tokenAtom)
     const setToken = useSetRecoilState(tokenAtom)
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        
+        try {
+            await axiosInstance.get('auth/logout', {
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            
+        } catch (error) {
+            console.log(error)
+            return
+        }
         localStorage.removeItem('token')
         setToken('')
         router.push('/')
