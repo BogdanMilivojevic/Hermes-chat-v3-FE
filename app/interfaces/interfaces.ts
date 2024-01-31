@@ -9,6 +9,7 @@ export interface User {
     email:string,
     photo_id:string,
     conversationId?:number
+    online:boolean
 } []
 
 export interface Message {

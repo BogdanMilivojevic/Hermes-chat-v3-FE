@@ -5,13 +5,17 @@ import axiosInstance from '../utils/axiosInstance';
 import Image from 'next/image';
 import { UserDefaultIcon } from '../components/Icons/Icons';
 import { useRouter } from 'next/navigation';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { conversationUserAtom } from '../state/conversationUser';
 import { User } from '../interfaces/interfaces';
+import { socket } from '../utils/socket';
+import { currentUserAtom } from '../state/userAtom';
 
 export default function Friends () {
+    const currentUser = useRecoilValue(currentUserAtom)
     const [friends,setFriends] = useState<User[]>([])
     const setConversationUserAtom = useSetRecoilState(conversationUserAtom)
+    const [onlineStatus,setOnlineStatus] = useState({})
     const router = useRouter()
 
     useEffect(() => {
@@ -25,6 +29,7 @@ export default function Friends () {
                         Authorization: `Bearer ${token}`
                     },
                 })
+
                 setFriends(res.data)
             } catch (error) {
                 console.log(error)
@@ -54,6 +59,45 @@ export default function Friends () {
         router.push(`conversation/${user.username}`)
     }
 
+    useEffect(() => {
+        socket.connect()
+        socket.emit('createRoom', currentUser.id)
+
+        socket.on('onSetOnlineStatus', (payload) => {
+            // const currentFriends = friends
+            // currentFriends.map(friend => {
+            //     if( friend.id === payload.id) {
+            //         friend.online = payload.online
+            //     }
+            // })
+            setOnlineStatus(payload)
+
+        })
+
+        return () => {
+            socket.off('onSetOnlineStatus')
+            socket.disconnect()
+            setOnlineStatus({})
+        }
+    },[])
+
+    useEffect(() => {
+        console.log(onlineStatus, 'here')
+
+        if(onlineStatus.id) {
+            setFriends(friends.map(friend => {
+                if(friend.id === onlineStatus.id) {
+                    return {...friend, online: onlineStatus.online}
+                } else {
+                    return friend
+                }
+            }))
+        }
+
+    },[onlineStatus])
+
+    console.log(friends)
+
     return (
         <div className="main-page-container">
             <MainPageNavbar/>
@@ -67,6 +111,7 @@ export default function Friends () {
                             )}
                         </div>
                         <h1>{user.username}</h1>
+                        {  user.online        &&      <div><p>ONLINE</p></div>}
                     </div>
                 )}
             </div>
