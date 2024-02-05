@@ -20,11 +20,11 @@ const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimi
     const messageRef = useRef()
     const lastIndex:number = messages.length - 1
 
-    useEffect(() => {
-        const storageUser = window.localStorage.getItem('conversationUser')
-        const parsedObject = JSON.parse(storageUser)
-        setConversationUser(parsedObject)
-    },[])
+    // useEffect(() => {
+    //     const storageUser = window.localStorage.getItem('conversationUser')
+    //     const parsedObject = JSON.parse(storageUser)
+    //     setConversationUser(parsedObject)
+    // },[])
 
     useEffect(() => {
         if(messages.length > 0) {

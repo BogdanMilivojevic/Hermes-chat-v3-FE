@@ -10,6 +10,7 @@ import { conversationUserAtom } from '../state/conversationUser';
 import { User } from '../interfaces/interfaces';
 import { socket } from '../utils/socket';
 import { currentUserAtom } from '../state/userAtom';
+import { Circle } from '@phosphor-icons/react';
 
 export default function Friends () {
     const currentUser = useRecoilValue(currentUserAtom)
@@ -20,7 +21,6 @@ export default function Friends () {
 
     useEffect(() => {
         const token = localStorage.getItem('token')
-        localStorage.removeItem('conversationUser')
 
         const getFriends = async () => {
             try {
@@ -45,16 +45,6 @@ export default function Friends () {
 
     const handleConversationEnter = (user:User) => {
 
-        const conversationUser = {
-            id: user.id,
-            username: user.username,
-            emaiL: user.email,
-            photo_id: user.photo_id,
-            conversationId: user.conversationId
-        }
-
-        localStorage.setItem('conversationUser',JSON.stringify(conversationUser))
-        
         setConversationUserAtom(user)
         router.push(`conversation/${user.username}`)
     }
@@ -64,12 +54,6 @@ export default function Friends () {
         socket.emit('createRoom', currentUser.id)
 
         socket.on('onSetOnlineStatus', (payload) => {
-            // const currentFriends = friends
-            // currentFriends.map(friend => {
-            //     if( friend.id === payload.id) {
-            //         friend.online = payload.online
-            //     }
-            // })
             setOnlineStatus(payload)
 
         })
@@ -82,7 +66,6 @@ export default function Friends () {
     },[])
 
     useEffect(() => {
-        console.log(onlineStatus, 'here')
 
         if(onlineStatus.id) {
             setFriends(friends.map(friend => {
@@ -96,7 +79,6 @@ export default function Friends () {
 
     },[onlineStatus])
 
-    console.log(friends)
 
     return (
         <div className="main-page-container">
@@ -111,7 +93,8 @@ export default function Friends () {
                             )}
                         </div>
                         <h1>{user.username}</h1>
-                        {  user.online        &&      <div><p>ONLINE</p></div>}
+                        {  user.online        &&      <Circle width={32} height={32} className='online-status online'/>}
+                        {  !user.online        &&      <Circle width={32} height={32} className='online-status offline'/>}
                     </div>
                 )}
             </div>

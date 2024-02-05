@@ -9,12 +9,13 @@ import { currentUserAtom } from '@/app/state/userAtom';
 import axiosInstance from '@/app/utils/axiosInstance';
 import { socket } from '@/app/utils/socket';
 import {  useEffect, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 
 export default function Conversation() {
     const currentUser = useRecoilValue(currentUserAtom)
     const conversationUser = useRecoilValue(conversationUserAtom)
+    const setConversationUser = useSetRecoilState(conversationUserAtom)
     const [messages,setMessages] = useState<Message[]>([])
     const [messageLimit, setMessageLimit] = useState<number>(15)
 
@@ -26,15 +27,22 @@ export default function Conversation() {
             setMessages((prevMessages) => [...prevMessages, payload.message])
         })
 
+        socket.on('onSetOnlineStatus', (payload) => {
+            console.log(payload)
+            setConversationUser({...conversationUser,online: payload.online } )
+        })
+
         return () => {
             socket.off('onMessage')
+            socket.off('onSetOnlineStatus')
             socket.disconnect()
         }
     },[])
 
+    console.log(conversationUser, 'convoUser')
+
 
     useEffect(() => {
-        console.log(conversationUser)
         const token = localStorage.getItem('token')
         const getMessagesfromConversation = async () => {
             try {
@@ -59,12 +67,10 @@ export default function Conversation() {
         }
     },[messageLimit])
 
-    console.log(messageLimit)
-
 
     return(
         <div className="main-page-container">
-            <ConversationNavbar/> 
+            <ConversationNavbar conversationUser={conversationUser}/> 
             <Messages messages={messages} setMessageLimit={setMessageLimit} messageLimit={messageLimit}/>  
             <InputBar conversationUser={conversationUser}/> 
         </div>

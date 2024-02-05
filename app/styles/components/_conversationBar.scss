@@ -29,6 +29,20 @@
         align-items: center;
         gap: 10px;
 
+
+        .online-status{
+            border: 3px;
+  
+          }
+  
+          .online{
+              color:green
+          } 
+  
+          .offline{
+              color: white
+          }
+
         .conversation-user-icon-container{
             height: 52px;
             width: 52px;
