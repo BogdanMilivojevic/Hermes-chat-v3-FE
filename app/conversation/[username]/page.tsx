@@ -13,36 +13,40 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 
 export default function Conversation() {
-    const currentUser = useRecoilValue(currentUserAtom)
+    // const currentUser = useRecoilValue(currentUserAtom)
     // const conversationUser = useRecoilValue(conversationUserAtom)
     // const setConversationUser = useSetRecoilState(conversationUserAtom)
     const [conversationUser,setConversationUser] = useState<User>({})
     const [messages,setMessages] = useState<Message[]>([])
     const [messageLimit, setMessageLimit] = useState<number>(15)
+    const [currentUser, setCurrentUser] = useState<User>({})
+
 
     useEffect(() => {
-        socket.connect()
-        socket.emit('createRoom', currentUser.id)
-
-        socket.on('onMessage', (payload) => {
-            setMessages((prevMessages) => [...prevMessages, payload.message])
-        })
-
-        socket.on('onSetOnlineStatus', (payload) => {
-            console.log(payload)
-            setConversationUser({...conversationUser,online: payload.online } )
-        })
-
         const storageUser = window.localStorage.getItem('conversationUser')
         const parsedObject = JSON.parse(storageUser)
         setConversationUser(parsedObject)
+        const token = localStorage.getItem('token')
 
-        return () => {
-            socket.off('onMessage')
-            socket.off('onSetOnlineStatus')
-            socket.disconnect()
+        const handleCurrentUser = async () => {
+            try {
+                const res = await axiosInstance.get('/auth/me', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                setCurrentUser(res.data)
+            } catch (error) {
+                console.log(error)
+            }
         }
-    },[])
+        handleCurrentUser()
+        return () => {
+            setCurrentUser({})
+            setConversationUser({})
+        }
+
+    }, [])
 
 
     useEffect(() => {
@@ -72,15 +76,40 @@ export default function Conversation() {
         return () => {
             getMessagesfromConversation()
         }
-    },[messageLimit, conversationUser.conversationId])
+    },[messageLimit, conversationUser.conversationId, currentUser.id])
 
-    console.log(conversationUser, 'convoUser')
+
+    useEffect(() => {
+        socket.connect()
+
+        if(currentUser.id) {
+            socket.emit('createRoom', currentUser.id)
+        }
+
+        socket.on('onMessage', (payload) => {
+            setMessages((prevMessages) => [...prevMessages, payload.message])
+        })
+
+        socket.on('onSetOnlineStatus', (payload) => {
+            const storageUser = window.localStorage.getItem('conversationUser')
+            const parsedObject = JSON.parse(storageUser)
+
+            setConversationUser({...parsedObject,online: payload.online } )
+        })
+
+        return () => {
+            socket.disconnect()
+            socket.off('onMessage')
+            socket.off('onSetOnlineStatus')
+            setMessages([])
+        }
+    },[currentUser.id])
 
 
     return(
         <div className="main-page-container">
             <ConversationNavbar conversationUser={conversationUser}/> 
-            <Messages messages={messages} setMessageLimit={setMessageLimit} messageLimit={messageLimit}/>  
+            <Messages messages={messages} setMessageLimit={setMessageLimit} messageLimit={messageLimit} currentUser={currentUser}/>  
             <InputBar conversationUser={conversationUser}/> 
         </div>
     )

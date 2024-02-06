@@ -8,6 +8,6 @@ export const conversationUserAtom = atom<User>({
         id: 0,
         username: '',
         email: '',
-        photo_id: ''
+        photo_id: '',
     }
 })

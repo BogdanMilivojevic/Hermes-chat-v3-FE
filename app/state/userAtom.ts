@@ -10,6 +10,6 @@ export const currentUserAtom = atom<User>({
         username: '',
         email: '',
         photo_id: '',
-        conversationId: 0
+        conversationId: 0,
     }
 })

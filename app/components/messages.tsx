@@ -12,11 +12,11 @@ interface MessageProp {
     messages: Message[]
     messageLimit: number
     setMessageLimit:  React.Dispatch<React.SetStateAction<number>>
+    currentUser: User
 }
 
-const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimit }) => {
+const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimit, currentUser }) => {
     const [conversationUser, setConversationUser] = useState<User>()
-    const currentUser = useRecoilValue(currentUserAtom)
     const messageRef = useRef()
     const lastIndex:number = messages.length - 1
 
@@ -90,9 +90,6 @@ const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimi
             return <a href={`${process.env.API_URL}/${url}`}  target="_blank" rel="noopener noreferrer" className='a-link-file'><File className='linked-file'/>{`file.${extension}`}</a>
         }
     }
-
-    console.log(messages)
-    console.log(currentUser, 'currUser')
 
     
     return (

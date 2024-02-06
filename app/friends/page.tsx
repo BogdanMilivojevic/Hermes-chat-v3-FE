@@ -66,15 +66,15 @@ export default function Friends () {
 
         socket.on('onSetOnlineStatus', (payload) => {
             setOnlineStatus(payload)
-
         })
 
         return () => {
-            socket.off('onSetOnlineStatus')
             socket.disconnect()
+            socket.off('onSetOnlineStatus')
             setOnlineStatus({})
         }
-    },[])
+    },[currentUser.id])
+
 
     useEffect(() => {
 
