@@ -45,6 +45,17 @@ export default function Friends () {
 
     const handleConversationEnter = (user:User) => {
 
+        const conversationUser = {
+            id: user.id,
+            username: user.username,
+            emaiL: user.email,
+            photo_id: user.photo_id,
+            conversationId: user.conversationId,
+            online:  user.online
+        }
+
+        localStorage.setItem('conversationUser',JSON.stringify(conversationUser))
+
         setConversationUserAtom(user)
         router.push(`conversation/${user.username}`)
     }

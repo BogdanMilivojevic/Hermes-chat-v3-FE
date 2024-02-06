@@ -20,11 +20,11 @@ const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimi
     const messageRef = useRef()
     const lastIndex:number = messages.length - 1
 
-    // useEffect(() => {
-    //     const storageUser = window.localStorage.getItem('conversationUser')
-    //     const parsedObject = JSON.parse(storageUser)
-    //     setConversationUser(parsedObject)
-    // },[])
+    useEffect(() => {
+        const storageUser = window.localStorage.getItem('conversationUser')
+        const parsedObject = JSON.parse(storageUser)
+        setConversationUser(parsedObject)
+    },[])
 
     useEffect(() => {
         if(messages.length > 0) {
@@ -34,6 +34,7 @@ const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimi
             return () => clearTimeout(timer)
         }
     }, [conversationUser])
+    
 
     const fetchMore = () => {
         setMessageLimit(messageLimit + 20)
@@ -69,7 +70,6 @@ const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimi
     }, [messages[lastIndex]])
 
 
-
     const findValue = (url:string) => {
         const splitedUrl = url.split('.')
         const extension:string = splitedUrl[splitedUrl.length - 1] 
@@ -90,6 +90,9 @@ const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimi
             return <a href={`${process.env.API_URL}/${url}`}  target="_blank" rel="noopener noreferrer" className='a-link-file'><File className='linked-file'/>{`file.${extension}`}</a>
         }
     }
+
+    console.log(messages)
+    console.log(currentUser, 'currUser')
 
     
     return (

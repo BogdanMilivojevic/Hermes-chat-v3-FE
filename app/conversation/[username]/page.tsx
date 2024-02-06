@@ -3,7 +3,7 @@
 import ConversationNavbar from '@/app/components/covnersationNavbar';
 import InputBar from '@/app/components/inputBar';
 import Messages from '@/app/components/messages';
-import { Message } from '@/app/interfaces/interfaces';
+import { Message, User } from '@/app/interfaces/interfaces';
 import { conversationUserAtom } from '@/app/state/conversationUser';
 import { currentUserAtom } from '@/app/state/userAtom';
 import axiosInstance from '@/app/utils/axiosInstance';
@@ -14,8 +14,9 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 export default function Conversation() {
     const currentUser = useRecoilValue(currentUserAtom)
-    const conversationUser = useRecoilValue(conversationUserAtom)
-    const setConversationUser = useSetRecoilState(conversationUserAtom)
+    // const conversationUser = useRecoilValue(conversationUserAtom)
+    // const setConversationUser = useSetRecoilState(conversationUserAtom)
+    const [conversationUser,setConversationUser] = useState<User>({})
     const [messages,setMessages] = useState<Message[]>([])
     const [messageLimit, setMessageLimit] = useState<number>(15)
 
@@ -32,6 +33,10 @@ export default function Conversation() {
             setConversationUser({...conversationUser,online: payload.online } )
         })
 
+        const storageUser = window.localStorage.getItem('conversationUser')
+        const parsedObject = JSON.parse(storageUser)
+        setConversationUser(parsedObject)
+
         return () => {
             socket.off('onMessage')
             socket.off('onSetOnlineStatus')
@@ -39,33 +44,37 @@ export default function Conversation() {
         }
     },[])
 
-    console.log(conversationUser, 'convoUser')
-
 
     useEffect(() => {
         const token = localStorage.getItem('token')
         const getMessagesfromConversation = async () => {
             try {
-                const res = await axiosInstance.get(`conversation/${conversationUser.conversationId}`, {
-                    params:{
-                        limit: messageLimit
-                    },
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                })
-                setMessages(res.data)
+                if(conversationUser.conversationId) {
+
+                    const res = await axiosInstance.get(`conversation/${conversationUser.conversationId}`, {
+                        params:{
+                            limit: messageLimit
+                        },
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        },
+                    })
+                    setMessages(res.data)
+                }
             } catch (error) {
                 console.log(error)
             }
         }
 
-        token && getMessagesfromConversation()
+
+        token &&  getMessagesfromConversation()
 
         return () => {
             getMessagesfromConversation()
         }
-    },[messageLimit])
+    },[messageLimit, conversationUser.conversationId])
+
+    console.log(conversationUser, 'convoUser')
 
 
     return(
