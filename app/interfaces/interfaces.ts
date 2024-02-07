@@ -21,6 +21,11 @@ export interface Message {
     updatedAt?:string
 }
 
+export interface OnlineStatus{
+    id: number,
+    online: boolean
+}
+
 export interface MessageWithExtensionI extends Message {
     extension?:string
 }

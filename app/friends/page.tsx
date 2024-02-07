@@ -7,7 +7,7 @@ import { UserDefaultIcon } from '../components/Icons/Icons';
 import { useRouter } from 'next/navigation';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { conversationUserAtom } from '../state/conversationUser';
-import { User } from '../interfaces/interfaces';
+import { OnlineStatus, User } from '../interfaces/interfaces';
 import { socket } from '../utils/socket';
 import { currentUserAtom } from '../state/userAtom';
 import { Circle } from '@phosphor-icons/react';
@@ -16,7 +16,7 @@ export default function Friends () {
     const currentUser = useRecoilValue(currentUserAtom)
     const [friends,setFriends] = useState<User[]>([])
     const setConversationUserAtom = useSetRecoilState(conversationUserAtom)
-    const [onlineStatus,setOnlineStatus] = useState({})
+    const [onlineStatus,setOnlineStatus] = useState<OnlineStatus>({id:0, online: false})
     const router = useRouter()
 
     useEffect(() => {
@@ -65,20 +65,23 @@ export default function Friends () {
         socket.emit('createRoom', currentUser.id)
 
         socket.on('onSetOnlineStatus', (payload) => {
+            console.log(payload,'payload')
             setOnlineStatus(payload)
         })
 
         return () => {
             socket.disconnect()
             socket.off('onSetOnlineStatus')
-            setOnlineStatus({})
+            setOnlineStatus({id:0, online: false})
         }
-    },[currentUser.id])
+    },[currentUser.id, friends])
 
 
     useEffect(() => {
-
+        
         if(onlineStatus.id) {
+            
+            console.log(onlineStatus)
             setFriends(friends.map(friend => {
                 if(friend.id === onlineStatus.id) {
                     return {...friend, online: onlineStatus.online}
@@ -104,8 +107,8 @@ export default function Friends () {
                             )}
                         </div>
                         <h1>{user.username}</h1>
-                        {  user.online        &&      <Circle width={32} height={32} className='online-status online'/>}
-                        {  !user.online        &&      <Circle width={32} height={32} className='online-status offline'/>}
+                        {  user.online  &&  <Circle width={32} height={32} className='online-status online'/>}
+                        {  !user.online &&  <Circle width={32} height={32} className='online-status offline'/>}
                     </div>
                 )}
             </div>

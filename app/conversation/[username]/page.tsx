@@ -13,18 +13,17 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 
 export default function Conversation() {
-    // const currentUser = useRecoilValue(currentUserAtom)
-    // const conversationUser = useRecoilValue(conversationUserAtom)
-    // const setConversationUser = useSetRecoilState(conversationUserAtom)
-    const [conversationUser,setConversationUser] = useState<User>({})
+    const [conversationUser,setConversationUser] = useState<User>({id:0, conversationId:0, online:false, email:'',photo_id:'',username:''})
     const [messages,setMessages] = useState<Message[]>([])
     const [messageLimit, setMessageLimit] = useState<number>(15)
-    const [currentUser, setCurrentUser] = useState<User>({})
+    const [currentUser, setCurrentUser] = useState<User>({id:0, conversationId:0, online:false, email:'',photo_id:'',username:''})
 
 
     useEffect(() => {
+        let parsedObject
         const storageUser = window.localStorage.getItem('conversationUser')
-        const parsedObject = JSON.parse(storageUser)
+        storageUser ?  parsedObject = JSON.parse(storageUser) : ''
+        
         setConversationUser(parsedObject)
         const token = localStorage.getItem('token')
 
@@ -42,8 +41,8 @@ export default function Conversation() {
         }
         handleCurrentUser()
         return () => {
-            setCurrentUser({})
-            setConversationUser({})
+            setCurrentUser({id:0, conversationId:0, online:false, email:'',photo_id:'',username:''})
+            setConversationUser({id:0, conversationId:0, online:false, email:'',photo_id:'',username:''})
         }
 
     }, [])
@@ -91,8 +90,12 @@ export default function Conversation() {
         })
 
         socket.on('onSetOnlineStatus', (payload) => {
+            let parsedObject
             const storageUser = window.localStorage.getItem('conversationUser')
-            const parsedObject = JSON.parse(storageUser)
+            storageUser ?  parsedObject = JSON.parse(storageUser) : ''
+
+            //localStorage for conversationUser should also be updated
+            localStorage.setItem('conversationUser',JSON.stringify({...parsedObject, online: payload.online}))
 
             setConversationUser({...parsedObject,online: payload.online } )
         })
