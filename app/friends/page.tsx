@@ -5,18 +5,22 @@ import axiosInstance from '../utils/axiosInstance';
 import Image from 'next/image';
 import { UserDefaultIcon } from '../components/Icons/Icons';
 import { useRouter } from 'next/navigation';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { conversationUserAtom } from '../state/conversationUser';
-import { User } from '../interfaces/interfaces';
+import { OnlineStatus, User } from '../interfaces/interfaces';
+import { socket } from '../utils/socket';
+import { currentUserAtom } from '../state/userAtom';
+import { Circle } from '@phosphor-icons/react';
 
 export default function Friends () {
+    const currentUser = useRecoilValue(currentUserAtom)
     const [friends,setFriends] = useState<User[]>([])
     const setConversationUserAtom = useSetRecoilState(conversationUserAtom)
+    const [onlineStatus,setOnlineStatus] = useState<OnlineStatus>({id:0, online: false})
     const router = useRouter()
 
     useEffect(() => {
         const token = localStorage.getItem('token')
-        localStorage.removeItem('conversationUser')
 
         const getFriends = async () => {
             try {
@@ -25,6 +29,7 @@ export default function Friends () {
                         Authorization: `Bearer ${token}`
                     },
                 })
+
                 setFriends(res.data)
             } catch (error) {
                 console.log(error)
@@ -45,14 +50,49 @@ export default function Friends () {
             username: user.username,
             emaiL: user.email,
             photo_id: user.photo_id,
-            conversationId: user.conversationId
+            conversationId: user.conversationId,
+            online:  user.online
         }
 
         localStorage.setItem('conversationUser',JSON.stringify(conversationUser))
-        
+
         setConversationUserAtom(user)
         router.push(`conversation/${user.username}`)
     }
+
+    useEffect(() => {
+        socket.connect()
+        socket.emit('createRoom', currentUser.id)
+
+        socket.on('onSetOnlineStatus', (payload) => {
+            console.log(payload,'payload')
+            setOnlineStatus(payload)
+        })
+
+        return () => {
+            socket.disconnect()
+            socket.off('onSetOnlineStatus')
+            setOnlineStatus({id:0, online: false})
+        }
+    },[currentUser.id, friends])
+
+
+    useEffect(() => {
+        
+        if(onlineStatus.id) {
+            
+            console.log(onlineStatus)
+            setFriends(friends.map(friend => {
+                if(friend.id === onlineStatus.id) {
+                    return {...friend, online: onlineStatus.online}
+                } else {
+                    return friend
+                }
+            }))
+        }
+
+    },[onlineStatus])
+
 
     return (
         <div className="main-page-container">
@@ -67,6 +107,8 @@ export default function Friends () {
                             )}
                         </div>
                         <h1>{user.username}</h1>
+                        {  user.online  &&  <Circle width={32} height={32} className='online-status online'/>}
+                        {  !user.online &&  <Circle width={32} height={32} className='online-status offline'/>}
                     </div>
                 )}
             </div>

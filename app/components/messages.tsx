@@ -12,11 +12,11 @@ interface MessageProp {
     messages: Message[]
     messageLimit: number
     setMessageLimit:  React.Dispatch<React.SetStateAction<number>>
+    currentUser: User
 }
 
-const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimit }) => {
+const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimit, currentUser }) => {
     const [conversationUser, setConversationUser] = useState<User>()
-    const currentUser = useRecoilValue(currentUserAtom)
     const messageRef = useRef()
     const lastIndex:number = messages.length - 1
 
@@ -34,6 +34,7 @@ const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimi
             return () => clearTimeout(timer)
         }
     }, [conversationUser])
+    
 
     const fetchMore = () => {
         setMessageLimit(messageLimit + 20)
@@ -67,7 +68,6 @@ const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimi
         messageRef.current.lastElementChild?.scrollIntoView({ behavior: 'smooth' })
 
     }, [messages[lastIndex]])
-
 
 
     const findValue = (url:string) => {

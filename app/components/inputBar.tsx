@@ -39,7 +39,10 @@ const InputBar: React.FC<ConversationIdProp>  = ({conversationUser}) => {
         const token = localStorage.getItem('token')
         const bodyFormData = new FormData()
         
-        bodyFormData.append('conversationId', conversationUser.conversationId)
+        if(conversationUser.conversationId) {
+
+            bodyFormData.append('conversationId', conversationUser.conversationId)
+        }
         bodyFormData.append('friendsId[]', conversationUser.id)
         bodyFormData.append('text', text)
 

@@ -3,17 +3,15 @@ import { BackIcon, UserDefaultIcon } from './Icons/Icons'
 import { User } from '../interfaces/interfaces';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Circle } from '@phosphor-icons/react';
+
+interface ConversationIdProp {
+    conversationUser: User
+}
 
 
-const ConversationNavbar = () => {
+const ConversationNavbar:React.FC<ConversationIdProp>  = ({conversationUser}) => {
     const router = useRouter()
-    const [conversationUser, setConversationUser] = useState<User>()
-
-    useEffect(() => {
-        const storageUser = window.localStorage.getItem('conversationUser')
-        const parsedObject = JSON.parse(storageUser)
-        setConversationUser(parsedObject)
-    },[])
 
     const handleBackRoute = () => {
         router.push('/friends')
@@ -29,6 +27,8 @@ const ConversationNavbar = () => {
                     )}
                 </div>
                 <h1>{conversationUser?.username}</h1>
+                {  conversationUser?.online        &&      <Circle width={32} height={32} className='online-status online'/>}
+                {  !conversationUser?.online        &&      <Circle width={32} height={32} className='online-status offline'/>}
             </div>
         </div>
     )

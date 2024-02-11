@@ -13,6 +13,19 @@
         border-radius: 18px;
         cursor: pointer;
 
+        .online-status{
+          border: 3px;
+
+        }
+
+        .online{
+            color:green
+        } 
+
+        .offline{
+            color: white
+        }
+
         h1{
             color: $text-color;
             font-family: $primary-font;

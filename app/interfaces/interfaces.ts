@@ -9,6 +9,7 @@ export interface User {
     email:string,
     photo_id:string,
     conversationId?:number
+    online:boolean
 } []
 
 export interface Message {
@@ -18,6 +19,11 @@ export interface Message {
     url?:string[],
     createdAt?:string,
     updatedAt?:string
+}
+
+export interface OnlineStatus{
+    id: number,
+    online: boolean
 }
 
 export interface MessageWithExtensionI extends Message {
