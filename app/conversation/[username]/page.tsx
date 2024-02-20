@@ -41,8 +41,8 @@ export default function Conversation() {
         }
         handleCurrentUser()
         return () => {
-            setCurrentUser({id:0, conversationId:0, online:false, email:'',photo_id:'',username:''})
-            setConversationUser({id:0, conversationId:0, online:false, email:'',photo_id:'',username:''})
+            setCurrentUser({id:0, conversationId:0, online:false, email:'',photo_id:'',username:'', lastMessage: ''})
+            setConversationUser({id:0, conversationId:0, online:false, email:'',photo_id:'',username:'',lastMessage: ''})
         }
 
     }, [])

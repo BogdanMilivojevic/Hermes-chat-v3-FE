@@ -60,28 +60,43 @@ export default function Friends () {
         router.push(`conversation/${user.username}`)
     }
 
+    const updateLastMessage = ({message}) => {
+        setFriends(friends.map(friend => {
+            if(friend.id === message.user_id) {
+                return {...friend, lastMessage:message.text}
+            } else {
+                return friend
+            }
+        }))
+    }
+
     useEffect(() => {
         socket.connect()
         socket.emit('createRoom', currentUser.id)
 
         socket.on('onSetOnlineStatus', (payload) => {
-            console.log(payload,'payload')
-            setOnlineStatus(payload)
+            setOnlineStatus(payload.message)
         })
+
+        socket.on('onMessage', (payload) => {
+            updateLastMessage(payload)
+        })
+
 
         return () => {
             socket.disconnect()
             socket.off('onSetOnlineStatus')
+            socket.off('onMessage')
             setOnlineStatus({id:0, online: false})
         }
     },[currentUser.id, friends])
+    
 
 
     useEffect(() => {
         
         if(onlineStatus.id) {
             
-            console.log(onlineStatus)
             setFriends(friends.map(friend => {
                 if(friend.id === onlineStatus.id) {
                     return {...friend, online: onlineStatus.online}
@@ -109,6 +124,7 @@ export default function Friends () {
                         <h1>{user.username}</h1>
                         {  user.online  &&  <Circle width={32} height={32} className='online-status online'/>}
                         {  !user.online &&  <Circle width={32} height={32} className='online-status offline'/>}
+                        <h1 className='last-message'>{user.lastMessage}</h1>
                     </div>
                 )}
             </div>
