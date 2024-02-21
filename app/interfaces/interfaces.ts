@@ -9,7 +9,9 @@ export interface User {
     email:string,
     photo_id:string,
     conversationId?:number
-    online:boolean
+    online:boolean,
+    lastMessage: string,
+    lastMessageSenderId:number
 } []
 
 export interface Message {
@@ -28,4 +30,17 @@ export interface OnlineStatus{
 
 export interface MessageWithExtensionI extends Message {
     extension?:string
+}
+
+export interface WebSocketStatus {
+    id:number,
+    online:boolean
+}
+
+export interface WebSocketMessage {
+    id: number,
+    text: string,
+    user_id: number,
+    createdAt: string,
+    updatedAt: string
 }
