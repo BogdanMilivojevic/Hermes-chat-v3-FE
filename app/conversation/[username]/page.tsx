@@ -3,7 +3,7 @@
 import ConversationNavbar from '@/app/components/covnersationNavbar';
 import InputBar from '@/app/components/inputBar';
 import Messages from '@/app/components/messages';
-import { Message, User } from '@/app/interfaces/interfaces';
+import { Message, User, WebSocketMessage } from '@/app/interfaces/interfaces';
 import { conversationUserAtom } from '@/app/state/conversationUser';
 import { currentUserAtom } from '@/app/state/userAtom';
 import axiosInstance from '@/app/utils/axiosInstance';
@@ -13,10 +13,10 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 
 export default function Conversation() {
-    const [conversationUser,setConversationUser] = useState<User>({id:0, conversationId:0, online:false, email:'',photo_id:'',username:''})
+    const [conversationUser,setConversationUser] = useState<User>({id:0, conversationId:0, online:false, email:'',photo_id:'',username:'', lastMessage:'', lastMessageSenderId: 0})
     const [messages,setMessages] = useState<Message[]>([])
     const [messageLimit, setMessageLimit] = useState<number>(15)
-    const [currentUser, setCurrentUser] = useState<User>({id:0, conversationId:0, online:false, email:'',photo_id:'',username:''})
+    const [currentUser, setCurrentUser] = useState<User>({id:0, conversationId:0, online:false, email:'',photo_id:'',username:'', lastMessage:'', lastMessageSenderId: 0})
 
 
     useEffect(() => {
@@ -41,8 +41,8 @@ export default function Conversation() {
         }
         handleCurrentUser()
         return () => {
-            setCurrentUser({id:0, conversationId:0, online:false, email:'',photo_id:'',username:'', lastMessage: ''})
-            setConversationUser({id:0, conversationId:0, online:false, email:'',photo_id:'',username:'',lastMessage: ''})
+            setCurrentUser({id:0, conversationId:0, online:false, email:'',photo_id:'',username:'', lastMessage: '', lastMessageSenderId: 0})
+            setConversationUser({id:0, conversationId:0, online:false, email:'',photo_id:'',username:'',lastMessage: '', lastMessageSenderId: 0})
         }
 
     }, [])
@@ -85,8 +85,8 @@ export default function Conversation() {
             socket.emit('createRoom', currentUser.id)
         }
 
-        socket.on('onMessage', (payload) => {
-            setMessages((prevMessages) => [...prevMessages, payload.message])
+        socket.on('onMessage', (payload:WebSocketMessage) => {
+            setMessages((prevMessages) => [...prevMessages, payload])
         })
 
         socket.on('onSetOnlineStatus', (payload) => {

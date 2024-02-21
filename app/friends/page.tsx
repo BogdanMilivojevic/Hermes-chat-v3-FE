@@ -7,7 +7,7 @@ import { UserDefaultIcon } from '../components/Icons/Icons';
 import { useRouter } from 'next/navigation';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { conversationUserAtom } from '../state/conversationUser';
-import { OnlineStatus, User } from '../interfaces/interfaces';
+import { OnlineStatus, User, WebSocketMessage, WebSocketStatus } from '../interfaces/interfaces';
 import { socket } from '../utils/socket';
 import { currentUserAtom } from '../state/userAtom';
 import { Circle } from '@phosphor-icons/react';
@@ -60,10 +60,10 @@ export default function Friends () {
         router.push(`conversation/${user.username}`)
     }
 
-    const updateLastMessage = ({message}) => {
+    const updateLastMessage = (message: WebSocketMessage) => {
         setFriends(friends.map(friend => {
             if(friend.id === message.user_id) {
-                return {...friend, lastMessage:message.text}
+                return {...friend, lastMessage:message.text, lastMessageSenderId:message.user_id}
             } else {
                 return friend
             }
@@ -74,11 +74,11 @@ export default function Friends () {
         socket.connect()
         socket.emit('createRoom', currentUser.id)
 
-        socket.on('onSetOnlineStatus', (payload) => {
-            setOnlineStatus(payload.message)
+        socket.on('onSetOnlineStatus', (payload: WebSocketStatus) => {
+            setOnlineStatus(payload)
         })
 
-        socket.on('onMessage', (payload) => {
+        socket.on('onMessage', (payload: WebSocketMessage) => {
             updateLastMessage(payload)
         })
 
@@ -94,7 +94,6 @@ export default function Friends () {
 
 
     useEffect(() => {
-        
         if(onlineStatus.id) {
             
             setFriends(friends.map(friend => {
@@ -124,7 +123,7 @@ export default function Friends () {
                         <h1>{user.username}</h1>
                         {  user.online  &&  <Circle width={32} height={32} className='online-status online'/>}
                         {  !user.online &&  <Circle width={32} height={32} className='online-status offline'/>}
-                        <h1 className='last-message'>{user.lastMessage}</h1>
+                        <h1 className={user.lastMessageSenderId === currentUser.id ? 'last-message' : 'last-message other'}>{user.lastMessage}</h1>
                     </div>
                 )}
             </div>
