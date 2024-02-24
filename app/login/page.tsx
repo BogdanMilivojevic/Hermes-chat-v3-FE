@@ -72,9 +72,9 @@ export default function Login() {
 
             localStorage.setItem('token', response.data)
             setToken(response.data)
-            router.push('/main-page')
+            router.push('/friends')
             
-        } catch (err) {
+        } catch (err:any) {
 
             if(isAxiosError(err)) {
 

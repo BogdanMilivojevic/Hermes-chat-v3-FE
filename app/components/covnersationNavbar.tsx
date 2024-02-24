@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { BackIcon, UserDefaultIcon } from './Icons/Icons'
 import { User } from '../interfaces/interfaces';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Circle } from '@phosphor-icons/react';
 

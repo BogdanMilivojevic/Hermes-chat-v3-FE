@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  frontend:
+    container_name: frontend
+    build: .
+    environment:
+      NODE_ENV: ${NODE_ENV}
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - 3000:3000

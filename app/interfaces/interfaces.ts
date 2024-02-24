@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface ActiveDivI {
     name: string;
     active: boolean;
@@ -43,4 +45,16 @@ export interface WebSocketMessage {
     user_id: number,
     createdAt: string,
     updatedAt: string
+}
+
+export interface mappedIconsI {
+    [key: string]: ReactNode
+}
+
+export interface UsersRelationship {
+    id:number
+    username: string
+    email: string
+    photo_id: string
+    relationshipId: number
 }

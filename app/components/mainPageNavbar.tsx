@@ -17,7 +17,7 @@ export default  function MainPageNavbar() {
     const setFriendRequestsAtom = useSetRecoilState(friendRequestsAtom)
     const setNotificationsAtom = useSetRecoilState(NotificationsAtom)
     const notifications = useRecoilValue(NotificationsAtom)
-    const [user,setUser] = useState<User>({id: 0, username:'', email:'', photo_id: ''})
+    const [user,setUser] = useState<User>({id: 0, username:'', email:'', photo_id: '', conversationId:0, online:false,lastMessage:'', lastMessageSenderId:0})
     const setToken = useSetRecoilState(tokenAtom)
     const currentUser = useRecoilValue(currentUserAtom)
     const router = useRouter()
@@ -35,41 +35,38 @@ export default  function MainPageNavbar() {
                 setUser(res.data)
                 setCurrentUser(res.data)
                 setToken(token)
-            } catch (error) {
+            } catch (error:any) {
                 console.log(error)
             }
         }
         handleCurrentUser()
         return () => {
-            setUser({id:0, username:'', email:'', photo_id: ''})
+            setUser({id: 0, username:'', email:'', photo_id: '', conversationId:0, online:false,lastMessage:'', lastMessageSenderId:0})
         }
     },[])
 
     const handleProfileSettingsRoute = () => {
         if(pathName === '/profile-settings') {
-            return router.push('/main-page')
+            return router.push('/friends')
         }
         router.push('/profile-settings')
     }
 
     const handleAddNewFriendRoute = () => {
         if(pathName === '/add-friend') {
-            return router.push('/main-page')
+            return router.push('/friends')
         }
         router.push('/add-friend')
     }
 
     const handleFriendRequestsRoute = () => {
         if(pathName === '/friend-requests') {
-            return router.push('/main-page')
+            return router.push('/friends')
         }
         router.push('/friend-requests')
     }
 
     const handleFriendsRoute = () => {
-        if(pathName === '/friends') {
-            return router.push('/main-page')
-        }
         router.push('/friends')
     }
 
@@ -88,7 +85,7 @@ export default  function MainPageNavbar() {
                 })
                 setFriendRequestsAtom(res.data)
                 setNotificationsAtom(res.data.length)
-            } catch (error) {
+            } catch (error:any) {
                 console.log(error)
             }
         }

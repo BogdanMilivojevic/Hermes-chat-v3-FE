@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './styles/global.scss'
 import Navbar from './components/navbar'
 import RecoilProvider from './utils/RecoilProvider'
+import { Ubuntu } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+const ubuntu = Ubuntu({ weight:['500', '700'] , display:'swap', subsets:['latin']})
 
 export const metadata: Metadata = {
     title: 'Hermes-chat-v3',
@@ -19,7 +19,7 @@ export default function RootLayout({
     return (
         <RecoilProvider>
             <html lang="en">
-                <body className={inter.className}>
+                <body className={ubuntu.className}>
                     <Navbar/>
                     {children}
                 </body>

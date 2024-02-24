@@ -4,19 +4,17 @@ import MainPageNavbar from '../components/mainPageNavbar';
 import debounce from 'lodash.debounce'
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import axiosInstance from '../utils/axiosInstance';
-import { useRecoilValue } from 'recoil';
-import { tokenAtom } from '../state/loggedInAtom';
-import { Users } from '../interfaces/interfaces';
 import Image from 'next/image';
 import { UserDefaultIcon } from '../components/Icons/Icons';
+import { User } from '../interfaces/interfaces';
 
 
 
 export  default function AddFriend ()  {
-    const [users,setUsers] = useState<Users[]>([])
-    const [pendingFriends,setPendingFriends] = useState<Users[]>([])
+    const [users,setUsers] = useState<User[]>([])
+    const [pendingFriends,setPendingFriends] = useState<User[]>([])
     const [friendRequestSent, SetFriendRequestSent] = useState<boolean>(false)
-    const inputRef = useRef<string>('');
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const userSearch = async (value:string) => {
         setUsers([])
@@ -31,7 +29,7 @@ export  default function AddFriend ()  {
                 }
             })
             setUsers(res.data)
-        } catch (error) {
+        } catch (error:any) {
             console.log(error)
         }
 
@@ -39,7 +37,9 @@ export  default function AddFriend ()  {
     }
     
     const resetInputValue = () => {
-        inputRef.current.value = ''
+        if (inputRef.current) {
+            inputRef.current.value = ' ';
+        }
     }
     
     const handleUserSearch = debounce((e:ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +68,7 @@ export  default function AddFriend ()  {
             SetFriendRequestSent(true)
             setUsers([])
             resetInputValue()
-        } catch (error) {
+        } catch (error:any) {
             console.log(error)
         }
     }
@@ -86,7 +86,7 @@ export  default function AddFriend ()  {
                 }
             })
             setPendingFriends(res.data)
-        } catch (error) {
+        } catch (error:any) {
             console.log(error)
         }
     }

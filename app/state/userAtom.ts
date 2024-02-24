@@ -11,5 +11,8 @@ export const currentUserAtom = atom<User>({
         email: '',
         photo_id: '',
         conversationId: 0,
+        online:false,
+        lastMessage:'', 
+        lastMessageSenderId:0
     }
 })

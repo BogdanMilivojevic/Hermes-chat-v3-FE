@@ -34,7 +34,7 @@ const filesWhiteList = [
 
 const returnTime = (createdAt:string) => {
     const date = new Date(createdAt)
-    const options = { hour: 'numeric', minute: 'numeric', weekday: 'long' }
+    const options = { hour: 'numeric', minute: 'numeric', weekday: 'long' } as const
     const time = new Intl.DateTimeFormat('en-US', options).format(date)
 
     return time

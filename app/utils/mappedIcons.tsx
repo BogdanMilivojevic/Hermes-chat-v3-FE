@@ -1,6 +1,7 @@
 import { File, FilePdf, FileVideo, Image } from '@phosphor-icons/react';
+import { mappedIconsI } from '../interfaces/interfaces';
 
-const mappedIcons = {
+const mappedIcons:mappedIconsI = {
     'image/jpeg': <Image height={42} width={42} className='input-bar-icon'/>,
     'image/png': <Image height={42} width={42} className='input-bar-icon'/>,
     'image/gif': <Image height={42} width={42} className='input-bar-icon'/>,
