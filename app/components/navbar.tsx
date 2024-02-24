@@ -22,7 +22,7 @@ export default function Navbar() {
                 }
             })
             
-        } catch (error) {
+        } catch (error:any) {
             console.log(error)
             return
         }

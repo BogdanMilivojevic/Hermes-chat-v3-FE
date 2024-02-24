@@ -111,7 +111,7 @@ export default function ProfileSettings () {
                 setCurrentUser(res.data[1][0])
                 setIsEditing(!isEditing)
             }
-        } catch (error) {
+        } catch (error:any) {
             console.log(error)
             if(axios.isAxiosError(error)) {
                 SetErrorMessage(error.response?.data.message)
@@ -186,7 +186,7 @@ export default function ProfileSettings () {
                     Authorization: `Bearer ${token}`
                 }
             })
-        } catch (err) {
+        } catch (err:any) {
             console.log(err)
             if(isAxiosError(err)) {
 

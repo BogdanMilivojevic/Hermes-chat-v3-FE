@@ -94,9 +94,9 @@ export default function Register() {
 
             localStorage.setItem('token', response.data)
             setToken(response.data)
-            router.push('/main-page')
+            router.push('/friends')
             
-        } catch (err) {
+        } catch (err:any) {
             console.log(err)
             if(isAxiosError(err)) {
 

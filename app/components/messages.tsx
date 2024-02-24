@@ -3,8 +3,6 @@ import { Message, User } from '../interfaces/interfaces';
 import helpers from '../utils/helpers';
 import ReactPlayer from 'react-player';
 import { File } from '@phosphor-icons/react';
-import { useRecoilValue } from 'recoil';
-import { currentUserAtom } from '../state/userAtom';
 import { useEffect, useRef, useState } from 'react';
 
 
@@ -17,19 +15,23 @@ interface MessageProp {
 
 const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimit, currentUser }) => {
     const [conversationUser, setConversationUser] = useState<User>()
-    const messageRef = useRef()
+    const messageRef = useRef<HTMLDivElement >(null)
     const lastIndex:number = messages.length - 1
 
     useEffect(() => {
         const storageUser = window.localStorage.getItem('conversationUser')
-        const parsedObject = JSON.parse(storageUser)
-        setConversationUser(parsedObject)
+        if(storageUser) {
+            const parsedObject = JSON.parse(storageUser)
+            setConversationUser(parsedObject)
+        }
     },[])
 
     useEffect(() => {
         if(messages.length > 0) {
             const timer = setTimeout(() => {
-                messageRef?.current.lastElementChild.scrollIntoView({ behavior: 'smooth' })
+                if(messageRef.current?.lastElementChild) {
+                    messageRef.current.lastElementChild.scrollIntoView({ behavior: 'smooth' })
+                }
             }, 500)
             return () => clearTimeout(timer)
         }
@@ -52,10 +54,10 @@ const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimi
                 }, {
                     threshold: 1
                 })
-                if (messageLimit > messages.length) {
+                if (messageLimit > messages.length && messageRef?.current?.firstElementChild ) {
                     observer.unobserve(messageRef.current.firstElementChild)
                 }
-                if (messageRef.current.firstElementChild) {
+                if (messageRef?.current?.firstElementChild) {
                     observer.observe(messageRef.current.firstElementChild)
                 }
             }, 1500)
@@ -65,7 +67,10 @@ const Messages: React.FC<MessageProp> = ({ messages,setMessageLimit, messageLimi
 
     // Scrolling to the latest message if there is a new latest message
     useEffect(() => {
-        messageRef.current.lastElementChild?.scrollIntoView({ behavior: 'smooth' })
+        if(messageRef.current?.lastElementChild) {
+
+            messageRef.current.lastElementChild?.scrollIntoView({ behavior: 'smooth' })
+        }
 
     }, [messages[lastIndex]])
 

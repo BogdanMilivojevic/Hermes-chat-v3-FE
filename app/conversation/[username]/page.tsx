@@ -35,7 +35,7 @@ export default function Conversation() {
                     }
                 })
                 setCurrentUser(res.data)
-            } catch (error) {
+            } catch (error:any) {
                 console.log(error)
             }
         }
@@ -64,7 +64,7 @@ export default function Conversation() {
                     })
                     setMessages(res.data)
                 }
-            } catch (error) {
+            } catch (error:any) {
                 console.log(error)
             }
         }

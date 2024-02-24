@@ -26,13 +26,13 @@ export default function FriendRequests () {
             })
             setFriendRequestsAtom(res.data)
             setNotificationsAtom(res.data.length)
-        } catch (error) {
+        } catch (error:any) {
             console.log(error)
         }
     }
 
-    const handleFriendRequestDecision = async(e, friendRequestId: number) => {   
-        const actionType = e.target.className
+    const handleFriendRequestDecision = async(e:React.MouseEvent<HTMLButtonElement>, friendRequestId: number) => {   
+        const {className} = (e.target as HTMLButtonElement)
         const token = localStorage.getItem('token')
         try {
             await axiosInstance.patch(`users/friend-request/${friendRequestId}`, {}, {
@@ -40,12 +40,12 @@ export default function FriendRequests () {
                     Authorization: `Bearer ${token}`
                 },
                 params:{
-                    type: actionType === 'accept-button' ? 'accept' : 'decline'
+                    type: className === 'accept-button' ? 'accept' : 'decline'
                 }
             })
 
             fetchFriendRequests(token)
-        } catch (error) {
+        } catch (error:any) {
             console.log(error)
         }
 

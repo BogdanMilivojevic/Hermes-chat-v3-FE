@@ -41,9 +41,9 @@ const InputBar: React.FC<ConversationIdProp>  = ({conversationUser}) => {
         
         if(conversationUser.conversationId) {
 
-            bodyFormData.append('conversationId', conversationUser.conversationId)
+            bodyFormData.append('conversationId', conversationUser.conversationId.toString())
         }
-        bodyFormData.append('friendsId[]', conversationUser.id)
+        bodyFormData.append('friendsId[]', conversationUser.id.toString())
         bodyFormData.append('text', text)
 
         for (let i = 0; i < files.length; i++) {
@@ -59,13 +59,13 @@ const InputBar: React.FC<ConversationIdProp>  = ({conversationUser}) => {
                     }})
             setText('')
             setFiles([])
-        } catch (error) {
+        } catch (error:any) {
             console.log(error)
         }
 
     }
 
-    const handleKey = (e) => {
+    const handleKey = (e:React.KeyboardEvent<HTMLInputElement>) => {
         e.key === 'Enter' && sendMessage()
     }
 
