@@ -1,8 +1,6 @@
 import { io } from 'socket.io-client';
 
-// const url = process.env.API_URL
+const url = process.env.API_URL as  string
 
-export const socket = io('http://localhost:4000', {
-    // autoConnect:false,
-    // transports: ['websocket'], upgrade: false
+export const socket = io(url, {
 });

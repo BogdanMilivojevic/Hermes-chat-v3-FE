@@ -6,13 +6,13 @@ services:
     environment:
       NODE_ENV: ${NODE_ENV}
     volumes:
-      - ./:/app
+      - .:/app
       - /app/node_modules
       - /app/.next
     networks:
-      - hermes-chat-v3-be_hermes-network
+      - hermes-network
     ports:
       - 3000:3000
 networks:
-  hermes-chat-v3-be_hermes-network:
+  hermes-network:
     external: true
