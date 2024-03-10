@@ -42,7 +42,7 @@ export default function Navbar() {
     return (
         <div className="navbar-layout">
             <div className="content-container">
-                <Link className='home-link' href={token ? '/main-page' : '/'}>
+                <Link className='home-link' href={token ? '/friends' : '/'}>
                     <div className='logo-container'>
                         <Bird className="logo-icon" size={36}/>
                         <h2>Hermes-chat</h2>

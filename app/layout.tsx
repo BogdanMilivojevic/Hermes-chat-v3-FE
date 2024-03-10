@@ -19,6 +19,9 @@ export default function RootLayout({
     return (
         <RecoilProvider>
             <html lang="en">
+                <head>
+                    <link rel="icon" href="/bird.svg" sizes="any" />
+                </head>
                 <body className={ubuntu.className}>
                     <Navbar/>
                     {children}

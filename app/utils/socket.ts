@@ -1,6 +1,21 @@
 import { io } from 'socket.io-client';
 
-const url = process.env.API_URL as  string
 
-export const socket = io(url, {
-});
+let socketAssignable 
+if(process.env.NODE_ENV === 'development') {
+
+    socketAssignable = io('http://localhost:4000', {
+        rejectUnauthorized: false
+    });
+}
+
+if(process.env.NODE_ENV === 'production') {
+
+    socketAssignable = io({
+        rejectUnauthorized: false
+    })
+      
+
+}
+
+export const socket = socketAssignable! 
