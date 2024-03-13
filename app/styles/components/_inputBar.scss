@@ -10,6 +10,12 @@
     width: 94%;
     border-radius: 12px;
 
+
+    @media(max-width: $input-bar-first-breakpoint) {
+        width: 84%;
+    }
+
+
     .send-button{
         height: 32px;
         width: 32px;

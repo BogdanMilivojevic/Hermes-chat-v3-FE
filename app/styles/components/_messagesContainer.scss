@@ -20,10 +20,15 @@
         border-radius: 35px;       
       }
 
+      @media(max-width: $messages-container-first-breakpoint) {
+        height: 300px;
+    }
+
 
       .sender-and-message-container{
         display: flex;
         gap: 10px;
+
 
         .sender-image-container{
             height: 52px;
@@ -54,6 +59,10 @@
               border-radius: 22px;
               width: 100%;
 
+              @media(max-width: $message-container-first-breakpoint) {
+                width: 60%;
+            }
+
 
               .a-link-file{
                 display: flex;
@@ -70,6 +79,7 @@
           
               p{
                   color: $text-color;
+                  word-wrap: break-word;
               }
 
               .timestamp{
@@ -81,6 +91,14 @@
                 display: grid;
                 grid-template-columns:1fr 2fr;
                 gap: 10px;
+
+                @media(max-width: $message-container-first-breakpoint) {
+                  padding: 10px;
+                  img {
+                    height: 80px;
+                    width: 80px;
+                  }
+              }
                 
                 .message-photo{
                   cursor: pointer;
