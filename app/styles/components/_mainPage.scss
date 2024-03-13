@@ -40,6 +40,12 @@
         width: 350px;
     }
 
+    @media(max-width: $main-page-fourth-breakpoint) {
+        width: 350px;
+        height: 500px;
+        transform: translate(-50%, -45%);
+    }
+
 
     .main-page-navbar{
         display: flex;

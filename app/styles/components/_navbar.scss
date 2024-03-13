@@ -15,6 +15,10 @@
     @media(max-width: $navbar-second-breakpoint) {
         width: 600px;
     }
+    
+    @media(max-width: $navbar-third-breakpoint) {
+        width: 350px;
+    }
 
     @media(max-width: $navbar-third-breakpoint) {
         width: 350px;
@@ -23,6 +27,7 @@
     @media(max-width: $navbar-fourth-breakpoint) {
         width: 300px;
     }
+
 
     .content-container {
         display: flex;
