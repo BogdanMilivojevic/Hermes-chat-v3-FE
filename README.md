@@ -16,6 +16,8 @@
 
 #### Installed docker engine on your machine is a prerequisite
 
+#### Since this project's docker network uses Hermes-BE network, first start BE project available at: https://github.com/BogdanMilivojevic/Hermes-chat-v3-BE
+
 - **Clone the repository**
 
 ```
