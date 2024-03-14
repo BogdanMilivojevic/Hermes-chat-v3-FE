@@ -29,7 +29,7 @@ git clone https://github.com/BogdanMilivojevic/Hermes-chat-v3-FE.git
 - **Build docker image and run container**
 
 ```
-git clone docker compose up --build
+docker compose up --build
 ```
 
 ## Screens UI
