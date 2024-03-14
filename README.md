@@ -12,6 +12,15 @@
 - [Socket.io](https://socket.io/)
 - [Sass](https://sass-lang.com/)
 
+## Features
+
+- Websocket enables real-time messaging
+- Websocket together with Redis enables display of online status for users
+- Image, video and document sharing between users
+- Friend request must be accepted before conversation is initialiased
+- CI-CD pipeline which makes test passing a requirement for a successful merge
+- Tests are made with jest
+
 ## Installation
 
 #### Installed docker engine on your machine is a prerequisite
